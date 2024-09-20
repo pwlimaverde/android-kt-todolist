@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -51,9 +53,14 @@ android {
 }
 
 dependencies {
-    implementation(libs.bundles.geral)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.geral)
+    implementation(libs.bundles.room)
+    implementation(libs.bundles.hilt)
     implementation(libs.bundles.compose)
+
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
 
