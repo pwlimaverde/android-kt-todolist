@@ -26,17 +26,24 @@ import com.pwlimaverde.todolist.ui.components.TodoItem
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 
 @Composable
-fun ListScreen(todo: List<Todo>) {
-    ListContent(todos = todo)
+fun ListScreen(
+    todo: List<Todo>,
+    navigateToAddEditScreen: (id: Long?) -> Unit
+) {
+    ListContent(
+        todos = todo,
+        onAddItemClicked = navigateToAddEditScreen
+    )
 }
 
 @Composable
 fun ListContent(
     todos: List<Todo>,
+    onAddItemClicked: (id: Long?) -> Unit,
 ) {
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {onAddItemClicked(null)}) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
         }
@@ -69,7 +76,8 @@ private fun ListScreenPreview() {
                 todo1,
                 todo2,
                 todo3
-            )
+            ),
+            onAddItemClicked = {}
         )
     }
 }
