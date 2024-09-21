@@ -26,8 +26,8 @@ import com.pwlimaverde.todolist.ui.components.TodoItem
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 
 @Composable
-fun ListScreen() {
-
+fun ListScreen(todo: List<Todo>) {
+    ListContent(todos = todo)
 }
 
 @Composable
