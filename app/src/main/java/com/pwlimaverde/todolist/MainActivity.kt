@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.pwlimaverde.todolist.core.navigation.TodoNavHost
+import com.pwlimaverde.todolist.ui.navigation.TodoNavHost
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
                 .safeDrawingPadding()
                 .padding(16.dp)
             ) {
-
                 TodoListTheme {
                     TodoNavHost()
                 }

@@ -1,4 +1,4 @@
-package com.pwlimaverde.todolist.core.navigation
+package com.pwlimaverde.todolist.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
