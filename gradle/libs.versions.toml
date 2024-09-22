@@ -13,12 +13,15 @@ returnSuccessOrErrorKt = "1.5.0"
 room = "2.6.1"
 navigation = "2.8.1"
 hilt = "2.51.1"
+kotlinxSerialization = "1.7.1"
+
 
 [libraries]
 #geral
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 returnSuccessOrErrorKt = { group = "com.pwlimaverde", name = "return_success_or_error_kt", version.ref = "returnSuccessOrErrorKt" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 #room
@@ -51,7 +54,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 [bundles]
-geral = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "returnSuccessOrErrorKt"]
+geral = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "returnSuccessOrErrorKt", "kotlinx-serialization-json"]
 room = ["androidx-room-ktx", "androidx-room-runtime"]
 hilt = ["hilt-android"]
 compose = ["androidx-activity-compose", "androidx-material3", "androidx-ui",
