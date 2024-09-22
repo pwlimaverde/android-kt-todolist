@@ -81,7 +81,7 @@ fun TodoItem(
 private fun TodoItemPreview() {
     TodoListTheme {
         TodoItem(
-            todo = todo1,
+            todo = Todo(id = 1, title = "Todo 1", description = "Description 1", isCompleted = false),
             onCompletedChange = {},
             onItemClicked = {},
             onDeleteClicked = {}
@@ -94,7 +94,7 @@ private fun TodoItemPreview() {
 private fun TodoItemCompletedPreview() {
     TodoListTheme {
         TodoItem(
-            todo = todo2,
+            todo = Todo(id = 2, title = "Todo 2", description = "Description 2", isCompleted = true),
             onCompletedChange = {},
             onItemClicked = {},
             onDeleteClicked = {}
