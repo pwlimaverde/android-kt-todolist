@@ -32,7 +32,6 @@ import com.pwlimaverde.todolist.sevices.features.local_storage.domain.usecase.Lo
 import com.pwlimaverde.todolist.ui.UiEvent
 import com.pwlimaverde.todolist.ui.components.TodoItem
 import com.pwlimaverde.todolist.ui.navigation.AddEtiteRoute
-import com.pwlimaverde.todolist.ui.screens.addedit.AddEditViewModel
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 
 @Composable
