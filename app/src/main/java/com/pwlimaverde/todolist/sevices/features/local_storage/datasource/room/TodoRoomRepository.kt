@@ -33,7 +33,7 @@ class TodoRoomRepository(
         dao.delete(existingEntity)
     }
 
-    override fun getAll(): Flow<List<Todo>> {
+    override suspend fun getAll(): Flow<List<Todo>> {
         return dao.getAll().map { entities ->
             entities.map { entity ->
                 convertEntityToTodo(entity)

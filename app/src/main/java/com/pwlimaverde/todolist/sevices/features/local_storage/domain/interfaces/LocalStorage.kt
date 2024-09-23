@@ -10,7 +10,7 @@ interface LocalStorage {
 
     suspend fun delete(id: Long)
 
-    fun getAll(): Flow<List<Todo>>
+    suspend fun getAll(): Flow<List<Todo>>
 
     suspend fun getBy(id: Long): Todo?
 }
