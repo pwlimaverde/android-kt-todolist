@@ -34,32 +34,22 @@ import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 @Composable
 fun AddEditScreen(
     id: Long?,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    addEditViewModel: AddEditViewModel
 ) {
-    val context = LocalContext.current.applicationContext
-    val database = TodoDatabaseProvider.provide(context)
-    val repository = TodoRoomRepository(database.todoDao)
-    val databaseDatasource = TodoRoomDatasource(repository)
-    val localStorage = LocalStorageUseCase(dataSource = databaseDatasource)
-    val featuresServerPresenter = FeaturesServerPresenter(localStorage)
-    val viewModel = viewModel<AddEditViewModel> {
-        AddEditViewModel(
-            id = id,
-            featuresServerPresenter = featuresServerPresenter
-        )
-    }
 
-    val title = viewModel.title
-    val description = viewModel.description
+    val title = addEditViewModel.title
+    val description = addEditViewModel.description
 
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect { uiEvent ->
+        addEditViewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(uiEvent.message)
                 }
+
                 UiEvent.NavigateBack -> {
                     navigateBack()
                 }
@@ -70,20 +60,29 @@ fun AddEditScreen(
     }
 
     AddEditContent(
+        id = id,
         title = title,
         description = description,
         snackbarHostState = snackbarHostState,
-        onEvent = viewModel::onEvent
+        onEvent = addEditViewModel::onEvent
     )
 }
 
 @Composable
 fun AddEditContent(
+    id: Long? = null,
     title: String = "",
     description: String?,
     snackbarHostState: SnackbarHostState,
     onEvent: (AddEditEvent) -> Unit
 ) {
+
+    LaunchedEffect(key1= true) {
+        if (id != null) {
+            onEvent(AddEditEvent.IdChanged(id))
+        }
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
