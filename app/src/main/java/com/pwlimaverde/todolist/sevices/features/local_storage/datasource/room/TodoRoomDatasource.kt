@@ -6,9 +6,8 @@ import com.pwlimaverde.todolist.sevices.features.local_storage.domain.usecase.LS
 
 
 class TodoRoomDatasource(
-    private val repository: TodoRoomRepository
+    private val repository: LocalStorage
 ):LSData {
-
     override suspend fun invoke(parameters: NoParams): LocalStorage {
         try {
             return repository

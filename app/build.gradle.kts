@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt.android)
     kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
@@ -55,13 +54,13 @@ android {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.koin.bom))
     implementation(libs.bundles.geral)
     implementation(libs.bundles.room)
-    implementation(libs.bundles.hilt)
+    implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)
 
     ksp(libs.androidx.room.compiler)
-    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
 

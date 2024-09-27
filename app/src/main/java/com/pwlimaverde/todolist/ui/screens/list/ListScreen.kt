@@ -34,28 +34,22 @@ import com.pwlimaverde.todolist.ui.components.TodoItem
 import com.pwlimaverde.todolist.ui.navigation.AddEtiteRoute
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
 
+
+
+
 @Composable
 fun ListScreen(
-    navigateToAddEditScreen: (id: Long?) -> Unit
+    navigateToAddEditScreen: (id: Long?) -> Unit,
+    listViewModel: ListViewModel
 ) {
-    val context = LocalContext.current.applicationContext
-    val database = TodoDatabaseProvider.provide(context)
-    val repository = TodoRoomRepository(database.todoDao)
-    val databaseDatasource = TodoRoomDatasource(repository)
-    val localStorage = LocalStorageUseCase(dataSource = databaseDatasource)
-    val featuresServerPresenter = FeaturesServerPresenter(localStorage)
-    val viewModel = viewModel<ListViewModel> {
-        ListViewModel(
-            featuresServerPresenter = featuresServerPresenter
-        )
-    }
 
-    val todos by viewModel.todos.collectAsState()
+    val todos by listViewModel.todos.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect { uiEvent ->
+
+        listViewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
                 is UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(uiEvent.message)
@@ -77,7 +71,7 @@ fun ListScreen(
     ListContent(
         todos = todos,
         snackbarHostState = snackbarHostState,
-        onEvent = viewModel::onEvent
+        onEvent = listViewModel::onEvent
     )
 }
 

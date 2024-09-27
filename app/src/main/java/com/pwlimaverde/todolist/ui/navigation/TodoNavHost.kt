@@ -6,8 +6,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.pwlimaverde.todolist.ui.screens.addedit.AddEditScreen
+import com.pwlimaverde.todolist.ui.screens.addedit.AddEditViewModel
 import com.pwlimaverde.todolist.ui.screens.list.ListScreen
+import com.pwlimaverde.todolist.ui.screens.list.ListViewModel
 import kotlinx.serialization.Serializable
+import org.koin.androidx.compose.koinViewModel
 
 @Serializable
 object ListRoute
@@ -27,6 +30,7 @@ fun TodoNavHost() {
                 navigateToAddEditScreen = {id ->
                     navController.navigate(AddEtiteRoute(id))
                 },
+                listViewModel = koinViewModel<ListViewModel>()
             )
         }
         composable<AddEtiteRoute> { backStackEntry ->
@@ -35,7 +39,8 @@ fun TodoNavHost() {
                 id = addEditRoute.id,
                 navigateBack = {
                     navController.popBackStack()
-                }
+                },
+                addEditViewModel = koinViewModel<AddEditViewModel>()
             )
 
         }
