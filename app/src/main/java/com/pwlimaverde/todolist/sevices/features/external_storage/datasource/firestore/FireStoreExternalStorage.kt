@@ -3,25 +3,22 @@ package com.pwlimaverde.todolist.sevices.features.external_storage.datasource.fi
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pwlimaverde.todolist.core.models.Registro
 import com.pwlimaverde.todolist.sevices.features.external_storage.domain.interfaces.ExternalStorage
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 
 class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStorage {
     override suspend fun readDocument(registro: Registro): Map<String, Any> {
         try {
 
-            var caminho = db.collection(registro.colecao).document(registro.documento)
-            var subData = registro.subcolecao
-            while (subData != null) {
-                caminho = caminho.collection(subData.colecao).document(subData.documento)
-                subData = subData.subcolecao
-            }
+            val reference = documentReference(registro)
 
-            val snapshot = caminho.get().await()
-            Log.e(TAG, "readDocument: ${snapshot.data}")
-            val data = snapshot.data?: emptyMap()
+            val snapshot = reference.get().await()
+
+            val data = snapshot.data ?: emptyMap()
             return data
 
         } catch (_: Exception) {
@@ -30,16 +27,24 @@ class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStor
     }
 
 
-//override suspend fun readStreamDocument(registro: Registro): Flow<Map<String, Any>> {
+
+
+    //override suspend fun readStreamDocument(registro: Registro): Flow<Map<String, Any>> {
 //    TODO("Not yet implemented")
 //}
 //
-//override suspend fun readCollection(
-//    registro: Registro,
-//    colecao: String
-//): List<Map<String, Any>> {
-//    TODO("Not yet implemented")
-//}
+    override suspend fun readCollectionRaiz(
+        colecao: String
+    ): List<Map<String, Any>> {
+
+        val collection = db.collection(colecao)
+        val snapshot = collection.get().await()
+
+        val data = snapshot.documents.map { document ->
+            document.data ?: emptyMap()
+        }
+        return data
+    }
 //
 //override suspend fun readStreamCollection(
 //    registro: Registro,
@@ -55,4 +60,14 @@ class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStor
 //override suspend fun remove(registro: Registro) {
 //    TODO("Not yet implemented")
 //}
+
+    private fun documentReference(registro: Registro): DocumentReference {
+        var caminho = db.collection(registro.colecao).document(registro.documento)
+        var subData = registro.subcolecao
+        while (subData != null) {
+            caminho = caminho.collection(subData.colecao).document(subData.documento)
+            subData = subData.subcolecao
+        }
+        return caminho
+    }
 }

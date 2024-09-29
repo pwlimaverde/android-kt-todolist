@@ -68,7 +68,7 @@ class ListViewModel(
     }
 
     private fun getAll(): Flow<List<Todo>> = flow {
-        val teste = featuresServerPresenter.read(Registro("todolist", "sHQXsTtnFuqfzmBDUf5W"))
+        val teste = featuresServerPresenter.readCollection(Registro("todolist", "sHQXsTtnFuqfzmBDUf5W"),"todolist")
         Log.e(TAG, "teste firebase: $teste")
         emitAll(featuresServerPresenter.getAll())
     }
