@@ -91,11 +91,11 @@ class FeaturesServerPresenter(
         }
     }
 
-    suspend fun readCollection(registro: Registro, colecao: String): List<Map<String, Any>> {
+    suspend fun readCollectionRaiz(colecao: String): List<Map<String, Any>> {
         try {
             when (val data = externalStorage.invokeCoroutine(NoParams(null))) {
                 is SuccessReturn<ExternalStorage> -> {
-                    val teste = data.result.readCollection(registro, colecao)
+                    val teste = data.result.readCollectionRaiz(colecao)
                     return teste
                 }
 
@@ -104,6 +104,32 @@ class FeaturesServerPresenter(
         } catch (e: Exception) {
             Log.e(TAG, "read: ${e.message}")
             return emptyList()
+        }
+    }
+
+    suspend fun removeDocument(registro: Registro) {
+        try {
+            when (val data = externalStorage.invokeCoroutine(NoParams(null))) {
+                is SuccessReturn<ExternalStorage> -> {
+                    data.result.remove(registro)
+                }
+                is ErrorReturn<ExternalStorage> -> {}
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "read: ${e.message}")
+        }
+    }
+
+    suspend fun writeDocument(registro: Registro) {
+        try {
+            when (val data = externalStorage.invokeCoroutine(NoParams(null))) {
+                is SuccessReturn<ExternalStorage> -> {
+                    data.result.write(registro)
+                }
+                is ErrorReturn<ExternalStorage> -> {}
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "read: ${e.message}")
         }
     }
 }

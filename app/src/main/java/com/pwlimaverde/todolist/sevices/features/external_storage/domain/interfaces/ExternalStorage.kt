@@ -8,6 +8,6 @@ interface ExternalStorage {
 //    suspend fun readStreamDocument(registro: Registro): Flow<Map<String, Any>>
     suspend fun readCollectionRaiz(colecao: String): List<Map<String, Any>>
 //    suspend fun readStreamCollection(registro: Registro, colecao: String): Flow<Map<String, Any>>
-//    suspend fun write(registro: Registro)
-//    suspend fun remove(registro: Registro)
+    suspend fun write(registro: Registro)
+    suspend fun remove(registro: Registro)
 }

@@ -27,8 +27,6 @@ class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStor
     }
 
 
-
-
     //override suspend fun readStreamDocument(registro: Registro): Flow<Map<String, Any>> {
 //    TODO("Not yet implemented")
 //}
@@ -45,7 +43,8 @@ class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStor
         }
         return data
     }
-//
+
+    //
 //override suspend fun readStreamCollection(
 //    registro: Registro,
 //    colecao: String
@@ -53,13 +52,28 @@ class FireStoreExternalStorage(private val db: FirebaseFirestore) : ExternalStor
 //    TODO("Not yet implemented")
 //}
 //
-//override suspend fun write(registro: Registro) {
-//    TODO("Not yet implemented")
-//}
-//
-//override suspend fun remove(registro: Registro) {
-//    TODO("Not yet implemented")
-//}
+    override suspend fun write(registro: Registro) {
+        var caminho = db.collection(registro.colecao).document(registro.documento)
+
+        if (registro.dados != null) {
+            caminho.set(registro.dados)
+        }
+        var subData = registro.subcolecao
+        while (subData != null) {
+            caminho = caminho.collection(subData.colecao).document(subData.documento)
+            if (subData.dados != null) {
+                caminho.set(subData.dados!!)
+            }
+            subData = subData.subcolecao
+        }
+
+
+    }
+
+    override suspend fun remove(registro: Registro) {
+        val reference = documentReference(registro)
+        reference.delete()
+    }
 
     private fun documentReference(registro: Registro): DocumentReference {
         var caminho = db.collection(registro.colecao).document(registro.documento)

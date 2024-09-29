@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 class ListViewModel(
     private val featuresServerPresenter: FeaturesServerPresenter,
@@ -68,7 +69,18 @@ class ListViewModel(
     }
 
     private fun getAll(): Flow<List<Todo>> = flow {
-        val teste = featuresServerPresenter.readCollection(Registro("todolist", "sHQXsTtnFuqfzmBDUf5W"),"todolist")
+        val id = UUID.randomUUID()
+        val teste = featuresServerPresenter.writeDocument(
+            Registro(
+                "todolist",
+                id.toString(),
+                dados = mapOf(
+                    "title" to "teste",
+                    "description" to "teste descricao",
+                    "isCompleted" to false,
+                )
+            )
+        )
         Log.e(TAG, "teste firebase: $teste")
         emitAll(featuresServerPresenter.getAll())
     }
