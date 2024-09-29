@@ -1,22 +1,31 @@
 package com.pwlimaverde.todolist.ui.screens.list
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.firestore
+import com.pwlimaverde.todolist.core.models.Registro
 import com.pwlimaverde.todolist.core.models.Todo
 import com.pwlimaverde.todolist.sevices.features.FeaturesServerPresenter
 import com.pwlimaverde.todolist.ui.UiEvent
 import com.pwlimaverde.todolist.ui.navigation.AddEtiteRoute
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class ListViewModel(
-    private val featuresServerPresenter: FeaturesServerPresenter
+    private val featuresServerPresenter: FeaturesServerPresenter,
 ) : ViewModel() {
 
     val todos = getAll()
@@ -59,6 +68,8 @@ class ListViewModel(
     }
 
     private fun getAll(): Flow<List<Todo>> = flow {
+        val teste = featuresServerPresenter.read(Registro("todolist", "sHQXsTtnFuqfzmBDUf5W"))
+        Log.e(TAG, "teste firebase: $teste")
         emitAll(featuresServerPresenter.getAll())
     }
 
