@@ -54,6 +54,8 @@ android {
 }
 
 dependencies {
+
+    implementation(kotlin("reflect"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.koin.bom))
     implementation(platform(libs.firebase.bom))
