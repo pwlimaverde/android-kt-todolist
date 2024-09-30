@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.firebase.database)
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
@@ -53,12 +54,16 @@ android {
 }
 
 dependencies {
+
+    implementation(kotlin("reflect"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.koin.bom))
+    implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.geral)
     implementation(libs.bundles.room)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)
+    implementation(libs.bundles.firebase)
 
     ksp(libs.androidx.room.compiler)
 

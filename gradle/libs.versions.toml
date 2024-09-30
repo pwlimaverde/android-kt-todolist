@@ -14,7 +14,10 @@ room = "2.6.1"
 navigation = "2.8.1"
 koin-bom = "4.0.0-RC2"
 kotlinxSerialization = "1.7.1"
-
+google-services = "4.4.2"
+firebase-bom = "33.3.0"
+firebaseCommonKtx = "21.0.0"
+firebaseFirestore = "25.1.0"
 
 [libraries]
 #geral
@@ -56,7 +59,13 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+#firebase
+firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+
 [bundles]
+firebase = ["firebase-common-ktx", "firebase-firestore"]
 geral = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "returnSuccessOrErrorKt", "kotlinx-serialization-json"]
 room = ["androidx-room-ktx", "androidx-room-runtime"]
 koin = ["koin-core", "koin-android", "koin-androidx-compose"]
@@ -68,8 +77,10 @@ debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 
 
 [plugins]
+firebase-database =  { id = "com.google.gms.google-services", version.ref = "google-services" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+

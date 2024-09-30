@@ -1,5 +1,7 @@
 package com.pwlimaverde.todolist.ui.screens.list
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -22,7 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.firestore
+import com.pwlimaverde.todolist.core.models.Registro
 import com.pwlimaverde.todolist.core.models.Todo
 import com.pwlimaverde.todolist.sevices.features.FeaturesServerPresenter
 import com.pwlimaverde.todolist.sevices.features.local_storage.datasource.room.TodoDatabaseProvider
@@ -33,8 +40,8 @@ import com.pwlimaverde.todolist.ui.UiEvent
 import com.pwlimaverde.todolist.ui.components.TodoItem
 import com.pwlimaverde.todolist.ui.navigation.AddEtiteRoute
 import com.pwlimaverde.todolist.ui.theme.TodoListTheme
-
-
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 
 @Composable
@@ -46,6 +53,7 @@ fun ListScreen(
     val todos by listViewModel.todos.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
+
 
     LaunchedEffect(Unit) {
 

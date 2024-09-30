@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pwlimaverde.todolist.core.models.Registro
 import com.pwlimaverde.todolist.sevices.features.FeaturesServerPresenter
 import com.pwlimaverde.todolist.ui.UiEvent
 import kotlinx.coroutines.channels.Channel
@@ -60,7 +61,7 @@ class AddEditViewModel(
 
     private fun setId(id: Long) {
         viewModelScope.launch {
-            val todo = featuresServerPresenter.getBy(id)
+            val todo = featuresServerPresenter.readDocument(Registro("todolist", id.toString()))
             title = todo?.title ?: ""
             description = todo?.description
         }

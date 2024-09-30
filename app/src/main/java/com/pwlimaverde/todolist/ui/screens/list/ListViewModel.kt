@@ -15,8 +15,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+
 class ListViewModel(
-    private val featuresServerPresenter: FeaturesServerPresenter
+    private val featuresServerPresenter: FeaturesServerPresenter,
 ) : ViewModel() {
 
     val todos = getAll()
